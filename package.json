@@ -11,6 +11,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ionicons": "^4.4.3",
+    "node-sass": "^4.9.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

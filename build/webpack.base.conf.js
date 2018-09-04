@@ -40,7 +40,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],   // 自动补全的扩展名
     alias: {
       'vue$': 'vue/dist/vue.esm.js',    // 例如 import Vue from 'vue'，会自动到 'vue/dist/vue.common.js'中寻找
-      '@': resolve('src')
+      '@': resolve('src'),
+      '@components': resolve('src/components')
     }
   },
   module: {

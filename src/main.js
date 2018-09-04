@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './views/App'
 import router from './router'
 import 'iview/dist/styles/iview.css'
+import 'ionicons'
+import store from './vuex/store.js'
 import IView from 'iview'
 Vue.use(IView)
 Vue.config.productionTip = false
@@ -12,6 +14,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

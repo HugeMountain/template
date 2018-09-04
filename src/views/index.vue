@@ -23,3 +23,10 @@ export default {
   }
 }
 </script>
+<style>
+  .main {
+    background-color: #fffdfd;
+    width: 100%;
+    height: 100%;
+  }
+</style>

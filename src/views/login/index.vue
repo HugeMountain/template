@@ -1,13 +1,13 @@
 <template>
   <div class="login-container">
-    <Form ref="form" :model="form" :rules="rule" :label-width="80">
-      <FormItem label="用户名" prop="username">
-        <Input type="password" v-model="form.username"/>
+    <Form ref="form" :model="form" :rules="rule" :label-width="150">
+      <FormItem label="" prop="username" class="width-100">
+        <Input type="password" prefix="ios-contact" v-model="form.username"/>
       </FormItem>
-      <FormItem label="密码" prop="password">
-        <Input type="password" v-model="form.password"/>
+      <FormItem label="" prop="password" class="width-100">
+        <Input type="password" prefix="ios-lock-outline" v-model="form.password"/>
       </FormItem>
-      <FormItem>
+      <FormItem class="width-100">
         <Button type="primary" @click="handleSubmit('form')">Submit</Button>
         <Button @click="handleReset('form')" style="margin-left: 8px">Reset</Button>
       </FormItem>
@@ -38,9 +38,7 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$Message.success('Success!')
-        } else {
-          this.$Message.error('Fail!')
+          this.$router.push({name: 'HelloWorld'})
         }
       })
     },
@@ -50,3 +48,14 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #083e5f;
+  text-align: center;
+}
+</style>
