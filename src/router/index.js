@@ -8,8 +8,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login/index.vue')
+    },
+    {
+      path: '/view',
+      name: 'view',
+      component: () => import('@/views/index.vue'),
+      redirect: '/view/HelloWorld',
+      children: [
+        {
+          path: '/view/HelloWorld',
+          name: 'HelloWorld',
+          component: () => import('@/views/HelloWorld.vue')
+        }
+      ]
     }
   ]
 })
