@@ -5,12 +5,14 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')  // webpack 复制文件和文件夹的插件
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')  // 提取css的插件
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin') // webpack 优化压缩和优化 css 的插件
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+// 如果当前环境为测试环境，则使用测试环境
+// 否则，使用生产环境
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
@@ -23,11 +25,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       usePostCSS: true
     })
   },
-  devtool: config.build.productionSourceMap ? config.build.devtool : false,
+  devtool: config.build.productionSourceMap ? config.build.devtool : false,    // 是否开启 sourceMap
   output: {
-    path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    path: config.build.assetsRoot,   // 编译输出的静态资源根路径
+    filename: utils.assetsPath('js/[name].[chunkhash].js'),  // 编译输出的文件名
+    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')  // 没有指定输出名的文件输出的文件名
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html

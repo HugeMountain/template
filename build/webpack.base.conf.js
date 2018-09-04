@@ -1,9 +1,14 @@
 'use strict'
-const path = require('path')
+const path = require('path') // node自带的文件路径工具
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+/**
+ * 获得绝对路径
+ * @method resolve
+ * @param  {String} dir 相对于本文件的路径
+ * @return {String}     绝对路径
+ */
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -25,16 +30,16 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
+    path: config.build.assetsRoot,  // 编译输出的静态资源根路径
+    filename: '[name].js',    // 编译输出的文件名
+    publicPath: process.env.NODE_ENV === 'production'       // 正式发布环境下编译输出的上线路径的根路径
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json'],   // 自动补全的扩展名
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js',    // 例如 import Vue from 'vue'，会自动到 'vue/dist/vue.common.js'中寻找
       '@': resolve('src')
     }
   },

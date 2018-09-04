@@ -1,23 +1,25 @@
 'use strict'
 require('./check-versions')()
-
+// 设置当前环境为生产环境
 process.env.NODE_ENV = 'production'
 
-const ora = require('ora')
-const rm = require('rimraf')
+const ora = require('ora') // loading 插件
+const rm = require('rimraf') // 可以在 node 中执行`rm -rf`的工具
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('chalk')  // 在终端输出带颜色的文字
 const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 
+// 在终端显示loading效果，并输出提示
 const spinner = ora('building for production...')
 spinner.start()
 
+// 删除这个文件夹 （递归删除）
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
-    spinner.stop()
+    spinner.stop() // 停止 loading动画
     if (err) throw err
     process.stdout.write(stats.toString({
       colors: true,

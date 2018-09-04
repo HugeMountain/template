@@ -43,20 +43,20 @@ module.exports = {
     cssSourceMap: true
   },
 
-  build: {
+  build: {   // 构建环境
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),  // 构建输出的index.html文件
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsRoot: path.resolve(__dirname, '../dist'),  // 构建输出的静态资源路径
+    assetsSubDirectory: 'static',   // 构建输出的二级目录
+    assetsPublicPath: '/',    // 构建发布的根目录，可配置为资源服务器域名或 CDN 域名
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: true,   // 是否开启 cssSourceMap
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
@@ -64,8 +64,8 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false,
-    productionGzipExtensions: ['js', 'css'],
+    productionGzip: false,    // 默认关闭 gzip，因为很多流行的静态资源主机，例如 Surge、Netlify，已经为所有静态资源开启gzip
+    productionGzipExtensions: ['js', 'css'],  // 需要使用 gzip 压缩的文件扩展名
 
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
