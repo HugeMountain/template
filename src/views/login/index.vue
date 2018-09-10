@@ -1,17 +1,19 @@
 <template>
   <div class="login-container">
-    <Form ref="form" :model="form" :rules="rule" :label-width="150">
-      <FormItem label="" prop="username" class="width-100">
-        <Input type="password" prefix="ios-contact" v-model="form.username"/>
-      </FormItem>
-      <FormItem label="" prop="password" class="width-100">
-        <Input type="password" prefix="ios-lock-outline" v-model="form.password"/>
-      </FormItem>
-      <FormItem class="width-100">
-        <Button type="primary" @click="handleSubmit('form')">Submit</Button>
-        <Button @click="handleReset('form')" style="margin-left: 8px">Reset</Button>
-      </FormItem>
-    </Form>
+    <div class="bg-table-line d-flex flex-column align-items-center justify-content-between width-35">
+      <div class="my-3">欢迎登录</div>
+      <Form ref="form" :model="form" :rules="rule">
+        <FormItem label="" prop="username" class="width-30">
+          <Input type="password" prefix="ios-contact" v-model="form.username"/>
+        </FormItem>
+        <FormItem label="" prop="password" class="width-30">
+          <Input type="password" prefix="ios-lock-outline" v-model="form.password"/>
+        </FormItem>
+        <FormItem class="width-30">
+          <Button type="primary" class="width-20" @click="handleSubmit('form')">登录</Button>
+        </FormItem>
+      </Form>
+    </div>
   </div>
 </template>
 
@@ -41,9 +43,6 @@ export default {
           this.$router.push({name: 'HelloWorld'})
         }
       })
-    },
-    handleReset (name) {
-      this.$refs[name].resetFields()
     }
   }
 }
@@ -55,7 +54,10 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: #083e5f;
+  color: #0a69e0;
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(-180deg, #f2a5e3, #009cda);
   text-align: center;
 }
 </style>

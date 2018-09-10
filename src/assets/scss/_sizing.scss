@@ -1,4 +1,4 @@
-@import './_parameters';
+
 @for $i from 0 through 80 {
   .width-#{$i},  .size-#{$i} { width:  $per-size * $i !important; }
   .height-#{$i}, .size-#{$i} { height: $per-size * $i !important; }

@@ -1,16 +1,25 @@
 <template>
   <div class="main">
-    <div class="left-wrap">
-      <left-nav></left-nav>
-    </div>
-    <div class="content-wrap">
-      <div class="bread-crumb">
-        <bread-crumb></bread-crumb>
-      </div>
-      <div class="main-view">
-        <router-view></router-view>
-      </div>
-    </div>
+    <Layout class="full-height">
+      <Sider hide-trigger>
+        <left-nav>
+          <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
+          <div class="logo-con">
+            <img v-if="!collapsed" :src="'@/assets/images/logo.jpg'" key="max-logo" />
+            <img v-if="collapsed" :src="'@/assets/images/logo-min.jpg'" key="min-logo" />
+          </div>
+        </left-nav>
+      </Sider>
+      <Layout>
+        <Header class="bg-white">
+          <bread-crumb>
+
+          </bread-crumb>
+        </Header>
+        <Content>Content</Content>
+        <Footer>Footer</Footer>
+      </Layout>
+    </Layout>
   </div>
 </template>
 <script>
@@ -20,6 +29,11 @@ export default {
   components: {
     LeftNav,
     BreadCrumb
+  },
+  data () {
+    return {
+      collapsed: false
+    }
   }
 }
 </script>

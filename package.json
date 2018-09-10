@@ -13,6 +13,7 @@
   "dependencies": {
     "ionicons": "^4.4.3",
     "node-sass": "^4.9.3",
+    "scss-loader": "0.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

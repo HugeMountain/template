@@ -26,10 +26,10 @@ const createLintingRule = () => ({
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
+  entry: {   //入口
     app: './src/main.js'
   },
-  output: {
+  output: {   //出口
     path: config.build.assetsRoot,  // 编译输出的静态资源根路径
     filename: '[name].js',    // 编译输出的文件名
     publicPath: process.env.NODE_ENV === 'production'       // 正式发布环境下编译输出的上线路径的根路径
