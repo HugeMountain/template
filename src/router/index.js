@@ -35,6 +35,10 @@ export default new Router({
       path: '/hello',
       name: 'hello',
       component: MainIndex,
+      meta: {
+        icon: 'logo-buffer',
+        title: '组件'
+      },
       redirect: '/hello/index',
       children: [
         {
@@ -42,9 +46,71 @@ export default new Router({
           name: 'hello_index',
           meta: {
             icon: '_qq',
-            title: '欢迎'
+            title: '欢迎1'
           },
-          component: () => import('@/views/HelloWorld.vue')
+          component: () => import('@/views/hello/HelloWorld.vue')
+        },
+        {
+          path: '/hello/index2',
+          name: 'hello_index2',
+          meta: {
+            hideTop: true,
+            icon: '_22',
+            title: '欢迎2'
+          },
+          component: () => import('@/views/hello/HelloWorld2.vue')
+        }
+      ]
+    },
+    {
+      path: '/two',
+      name: 'two',
+      component: MainIndex,
+      meta: {
+        icon: 'logo-buffer',
+        title: '组件2'
+      },
+      redirect: '/two/two1',
+      children: [
+        {
+          path: '/two/two1',
+          name: 'two_two1',
+          meta: {
+            icon: '_qq',
+            title: 'two1'
+          },
+          component: () => import('@/views/two/two1.vue')
+        },
+        {
+          path: '/two/two2',
+          name: 'two_two2',
+          meta: {
+            hideTop: true,
+            icon: '_22',
+            title: 'two2'
+          },
+          component: () => import('@/views/two/two2.vue')
+        }
+      ]
+    },
+    {
+      path: '/one',
+      name: 'one',
+      component: MainIndex,
+      meta: {
+        icon: 'logo-buffer',
+        title: '组件'
+      },
+      redirect: '/one/one',
+      children: [
+        {
+          path: '/one/one',
+          name: 'one_one',
+          meta: {
+            icon: '_qq',
+            title: 'one'
+          },
+          component: () => import('@/views/one/one.vue')
         }
       ]
     },
