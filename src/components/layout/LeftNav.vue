@@ -1,43 +1,46 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <Menu ref="menu" v-show="!collapsed" :active-name="activeName" :open-names="openedNames" :accordion="accordion" :theme="theme" width="auto" @on-select="handleSelect">
-      <template v-for="item in menuList">
-        <template v-if="item.children && item.children.length === 1">
+    <Menu ref="menu" width="auto">
+      <template>
+        <template>
+            <div v-for="(item, index) in menuList" :name="item.name" :key="index">
+              <div>{{item.meta.title}}</div>
+              <div v-if="item.children">
+                <div v-for="(row, i) in item.children" :key="i">
+                  {{row.meta.title}}
+                </div>
+              </div>
+             </div>
         </template>
-        <template v-else>
-        </template>
+        <!--<template v-else>-->
+        <!--</template>-->
       </template>
     </Menu>
-    <div class="menu-collapsed" v-show="collapsed" :list="menuList"></div>
+    <!--<div class="menu-collapsed" v-show="collapsed" :list="menuList"></div>-->
   </div>
 </template>
 <script>
-
+import {mapGetters} from 'vuex'
 export default {
   name: 'LeftNav',
   components: {},
   props: {
-    menuList: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    collapsed: {
-      type: Boolean
-    },
-    activeName: {
-      type: String,
-      default: ''
-    }
   },
   data () {
     return {
+      collapsed: false
     }
   },
-  methods: {},
-  computed: {},
+  methods: {
+    handleSelect () {
+    }
+  },
+  computed: {
+    ...mapGetters({
+      menuList: 'getLeftNavList'
+    })
+  },
   mounted () {}
 }
 </script>

@@ -5,12 +5,9 @@ export default {
   state: {
     breadcrumbList: [],
     leftNavList: []
-
   },
-  getters: {
-    getLeftNavList: (state, getters, rootState) => {
-      getMenuByRouter(routers, rootState.user.access)
-    }
+  getters: {// 箭头函数后面竟然不能加大括号，要命不
+    getLeftNavList: (state, getters, rootState) => getMenuByRouter(routers.options.routes, rootState.account.access)
   },
   mutations: {
     setBreadCrumb (state, routeMatched) {

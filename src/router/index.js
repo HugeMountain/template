@@ -19,6 +19,10 @@ export default new Router({
       path: '/',
       name: 'view',
       component: MainIndex,
+      meta: {
+        title: '首页',
+        single: true
+      },
       redirect: '/home',
       children: [
         {
@@ -37,7 +41,7 @@ export default new Router({
       component: MainIndex,
       meta: {
         icon: 'logo-buffer',
-        title: '组件'
+        title: '组件1'
       },
       redirect: '/hello/index',
       children: [
@@ -99,7 +103,7 @@ export default new Router({
       component: MainIndex,
       meta: {
         icon: 'logo-buffer',
-        title: '组件'
+        title: '组件3'
       },
       redirect: '/one/one',
       children: [
@@ -117,17 +121,11 @@ export default new Router({
     {
       path: '/401',
       name: 'error401',
-      meta: {
-        hideInMenu: true
-      },
       component: () => import('@/views/error-page/401.vue')
     },
     {
       path: '*',
       name: 'error404',
-      meta: {
-        hideInMenu: true
-      },
       component: () => import('@/views/error-page/404.vue')
     }
   ]

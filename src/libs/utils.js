@@ -7,11 +7,24 @@
 export const getMenuByRouter = (routerList, access) => {
   let leftNav = []
   routerList.forEach(route => {
-    if(route.meta) {
-      let children = route.c
+    if (route.meta) {
+      let children = route.children
+      let nav = {
+        path: route.path,
+        name: route.name,
+        component: route.component,
+        meta: route.meta
+      }
+      if (children && children.length > 0 && route.meta.single) {
+        nav.redirect = { name: children[0].name }
+      } else if (children && children.length > 0 && !route.meta.single) {
+        nav.children = getMenuByRouter(children, access)
+      }
+      leftNav.push(nav)
     }
   })
-
+  console.log(leftNav)
+  return leftNav
 }
 
 /**
@@ -19,5 +32,6 @@ export const getMenuByRouter = (routerList, access) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (routeMatched) => {
+  console.log(routeMatched)
   return routeMatched.slice(1)
 }
