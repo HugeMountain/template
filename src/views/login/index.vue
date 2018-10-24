@@ -40,6 +40,7 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
+          this.$store.commit('setActiveContent', {name: 'view'})
           this.$router.push({name: 'HelloWorld'})
         }
       })

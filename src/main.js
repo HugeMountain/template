@@ -8,6 +8,7 @@ import 'iview/dist/styles/iview.css'
 import 'ionicons'
 import store from './vuex/store.js'
 import IView from 'iview'
+import './assets/theme/index.less'
 Vue.use(IView)
 Vue.config.productionTip = false
 

@@ -41,7 +41,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',    // 例如 import Vue from 'vue'，会自动到 'vue/dist/vue.common.js'中寻找
       '@': resolve('src'),
-      '@components': resolve('src/components')
+      '@components': resolve('src/components'),
+      '@assets': resolve('src/assets')
     }
   },
   module: {
