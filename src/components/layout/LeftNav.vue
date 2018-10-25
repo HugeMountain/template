@@ -114,6 +114,9 @@ export default {
   },
   mounted () {
     this.setActiveContent(this.$route.name)
+    if (this.active.activeSecond) {
+      this.setOpenFlag({activeOpen: this.active.activeFirst, isOpen: true})
+    }
     console.log(this.active)
   }
 }
