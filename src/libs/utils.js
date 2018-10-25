@@ -33,5 +33,8 @@ export const getMenuByRouter = (routerList, access) => {
  */
 export const getBreadCrumbList = (routeMatched) => {
   console.log(routeMatched)
-  return routeMatched.slice(1)
+  if (routeMatched.length > 1 && routeMatched[0].meta.single) {
+    return routeMatched.slice(1)
+  }
+  return routeMatched
 }

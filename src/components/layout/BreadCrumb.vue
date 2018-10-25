@@ -1,7 +1,6 @@
 <template>
 <div class="breadcrumb-container">
   <Breadcrumb class="d-flex justify-content-start">
-    <BreadcrumbItem to="{name: 'home'}">首页</BreadcrumbItem>
     <BreadcrumbItem v-for="second in breadcrumbList" :key="second.name" :to="{name: second.name}">{{second.meta.title}}</BreadcrumbItem>
   </Breadcrumb>
 </div>

@@ -1,36 +1,43 @@
 <template>
   <div class="side-menu-wrapper">
-    <slot></slot>
+    <slot name="logo"></slot>
     <Menu ref="menu" width="auto">
-      <template> <!--可用iview导航菜单-->
-        <template v-if="true">
-          <div class="collapse">
-            <img width="100%" src="https://icarusion.gitee.io/iview/e1cf12c07bf6458992569e67927d767e.png">
-            <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name" :class="{ 'collapse-item-active':  isActiveFirst(item) }">
-              <div class="collapse-header">
-                <div class="d-inline-block fl">
-                  <Icon type="md-at" class="text-white"/>
-                  <span class="text-white">{{item.meta.title}}</span>
-                </div>
-                <div class="text-black fr cursor-pointer d-inline-block full-height" style="width: 25px" @click.stop="clickArrow(item)">
-                  <Icon type="ios-arrow-forward" class="text-white" v-if="item.children && !isOpen(item)"/>
-                  <Icon type="ios-arrow-down" class="text-white" v-if="item.children && isOpen(item)"/>
-                </div>
-              </div>
-              <div class="collapse-content" v-if="item.children && isOpen(item)">
-                <div class="collapse-content-box">
-                  <div v-for="(row, i) in item.children" :key="i" @click.stop="clickContent(row)" class="cursor-pointer text-white"
-                       :class="{'active-content': isActiveSecond(row)}">
-                    {{row.meta.title}}
-                  </div>
-                </div>
+      <!--可用iview导航菜单-->
+      <div class="collapse" v-show="!collapsed">
+        <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name" :class="{ 'collapse-item-active':  isActiveFirst(item) }">
+          <div class="collapse-header">
+            <div class="d-inline-block fl">
+              <Icon :type="item.meta.icon" class="text-white"/>
+              <span class="text-white">{{item.meta.title}}</span>
+            </div>
+            <div class="text-black fr cursor-pointer d-inline-block full-height" style="width: 25px" @click.stop="clickArrow(item)">
+              <Icon type="ios-arrow-forward" class="text-white" v-if="item.children && !isOpen(item)"/>
+              <Icon type="ios-arrow-down" class="text-white" v-if="item.children && isOpen(item)"/>
+            </div>
+          </div>
+          <div class="collapse-content" v-if="item.children && isOpen(item)">
+            <div class="collapse-content-box">
+              <div v-for="(row, i) in item.children" :key="i" @click.stop="clickContent(row)" class="cursor-pointer text-white"
+                   :class="{'active-content': isActiveSecond(row)}">
+                {{row.meta.title}}
               </div>
             </div>
           </div>
-        </template>
-        <template v-else>
-        </template>
-      </template>
+        </div>
+      </div>
+      <div v-show="collapsed">
+        <div v-for="(item, index) in menuList" :key="index" :name="item.name" class="list-item">
+          <Tooltip :content="item.meta.title" placement="right" v-if="!item.children">
+            <a class="text-white" @click="clickIcon(item)"><Icon :type="item.meta.icon" class="text-white text-24"/></a>
+          </Tooltip>
+          <Dropdown @on-click="onclickItem" v-else placement="right-start" transfer>
+            <a><Icon :type="item.meta.icon" @click.stop="clickIcon(item)" class="text-white text-24"/></a>
+            <DropdownMenu slot="list" class="drop-down-menu">
+              <DropdownItem v-for="(row, i) in item.children" :name="row.name" :key="i">{{row.meta.title}}</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+      </div>
     </Menu>
   </div>
 </template>
@@ -39,16 +46,37 @@ import { mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'LeftNav',
   components: {},
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {}
   },
   methods: {
+    onclickItem (name) {
+      this.setActiveContent(name)
+      this.$router.push({name: name})
+    },
+    clickIcon (first) {
+      if (first.children) {
+        this.setActiveContent(first.children[0].name)
+        this.$router.push({name: first.children[0].name})
+      } else {
+        this.setActiveContent(first.name)
+        this.$router.push({name: first.name})
+      }
+    },
     clickPane (first) {
       this.setOpenFlag({activeOpen: first.name, isOpen: true})
       if (first.children) {
         this.setActiveContent(first.children[0].name)
+        this.$router.push({name: first.children[0].name})
       } else {
         this.setActiveContent(first.name)
+        this.$router.push({name: first.name})
       }
     },
     clickArrow (first) {
@@ -56,6 +84,7 @@ export default {
     },
     clickContent (second) {
       this.setActiveContent(second.name)
+      this.$router.push({name: second.name})
     },
     isActiveFirst (first) {
       return this.active.activeFirst === first.name || (first.children && this.active.activeSecond === first.children[0].name)
@@ -71,7 +100,11 @@ export default {
       'setOpenFlag'
     ])
   },
-  watch: {},
+  watch: {
+    collapsed () {
+      console.log(this.collapsed)
+    }
+  },
   computed: {
     ...mapGetters({
       menuList: 'getLeftNavList',
@@ -96,9 +129,6 @@ export default {
       }
       .collapse-item {
         border-top: 1px solid #dcdee2;
-        &:first-child {
-          border-top: 0;
-        }
         .collapse-header {
           height: 38px;
           line-height: 38px;
@@ -128,6 +158,28 @@ export default {
               background: linear-gradient(left, #478cd2, #626e88, #478cd2);
             }
           }
+        }
+      }
+    }
+    .list-item {
+      height: 60px;
+      background-color: #515a6e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .ivu-dropdown{
+        width: 100%;
+        .ivu-dropdown-rel a{
+          width: 100%;
+        }
+      }
+      .ivu-select-dropdown {
+        width: 120px !important;
+      }
+      .ivu-tooltip {
+        width: 100%;
+        .ivu-tooltip-rel a{
+          width: 100%;
         }
       }
     }

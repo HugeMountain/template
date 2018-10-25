@@ -21,6 +21,7 @@ export default new Router({
       component: MainIndex,
       meta: {
         title: '首页',
+        icon: 'md-at',
         single: true
       },
       redirect: '/home',
@@ -29,6 +30,7 @@ export default new Router({
           path: '/home',
           name: 'home',
           meta: {
+            icon: 'md-at',
             title: '首页'
           },
           component: () => import('@/views/home/index.vue')
@@ -49,7 +51,7 @@ export default new Router({
           path: '/hello/index',
           name: 'hello_index',
           meta: {
-            icon: '_qq',
+            icon: 'md-at',
             title: '欢迎1'
           },
           component: () => import('@/views/hello/HelloWorld.vue')
@@ -59,7 +61,7 @@ export default new Router({
           name: 'hello_index2',
           meta: {
             hideTop: true,
-            icon: '_22',
+            icon: 'md-at',
             title: '欢迎2'
           },
           component: () => import('@/views/hello/HelloWorld2.vue')
@@ -71,7 +73,7 @@ export default new Router({
       name: 'two',
       component: MainIndex,
       meta: {
-        icon: 'logo-buffer',
+        icon: 'md-at',
         title: '组件2'
       },
       redirect: '/two/two1',
@@ -80,7 +82,7 @@ export default new Router({
           path: '/two/two1',
           name: 'two_two1',
           meta: {
-            icon: '_qq',
+            icon: 'md-at',
             title: 'two1'
           },
           component: () => import('@/views/two/two1.vue')
@@ -90,7 +92,7 @@ export default new Router({
           name: 'two_two2',
           meta: {
             hideTop: true,
-            icon: '_22',
+            icon: 'md-at',
             title: 'two2'
           },
           component: () => import('@/views/two/two2.vue')
@@ -102,7 +104,7 @@ export default new Router({
       name: 'one',
       component: MainIndex,
       meta: {
-        icon: 'logo-buffer',
+        icon: 'md-at',
         title: '组件3'
       },
       redirect: '/one/one',
@@ -111,7 +113,7 @@ export default new Router({
           path: '/one/one',
           name: 'one_one',
           meta: {
-            icon: '_qq',
+            icon: 'md-at',
             title: 'one'
           },
           component: () => import('@/views/one/one.vue')
