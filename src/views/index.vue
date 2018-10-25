@@ -4,7 +4,8 @@
       <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed">
         <left-nav :collapsed="collapsed">
           <template slot="logo">
-            <img width="100%" src="https://icarusion.gitee.io/iview/e1cf12c07bf6458992569e67927d767e.png">
+            <img width="100%" src="https://icarusion.gitee.io/iview/e1cf12c07bf6458992569e67927d767e.png"
+            style="clip:rect(0 140px 0 0)">
           </template>
         </left-nav>
       </Sider>

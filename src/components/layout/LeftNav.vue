@@ -6,9 +6,9 @@
       <div class="collapse" v-show="!collapsed">
         <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name" :class="{ 'collapse-item-active':  isActiveFirst(item) }">
           <div class="collapse-header">
-            <div class="d-inline-block fl">
-              <Icon :type="item.meta.icon" class="text-white"/>
-              <span class="text-white">{{item.meta.title}}</span>
+            <div class="d-inline-block fl label">
+              <Icon :type="item.meta.icon"/>
+              <span>{{item.meta.title}}</span>
             </div>
             <div class="text-black fr cursor-pointer d-inline-block full-height" style="width: 25px" @click.stop="clickArrow(item)">
               <Icon type="ios-arrow-forward" class="text-white" v-if="item.children && !isOpen(item)"/>
@@ -17,7 +17,7 @@
           </div>
           <div class="collapse-content" v-if="item.children && isOpen(item)">
             <div class="collapse-content-box">
-              <div v-for="(row, i) in item.children" :key="i" @click.stop="clickContent(row)" class="cursor-pointer text-white"
+              <div v-for="(row, i) in item.children" :key="i" @click.stop="clickContent(row)" class="cursor-pointer label"
                    :class="{'active-content': isActiveSecond(row)}">
                 {{row.meta.title}}
               </div>
@@ -25,10 +25,10 @@
           </div>
         </div>
       </div>
-      <div v-show="collapsed">
+      <div v-show="collapsed" class="border-top">
         <div v-for="(item, index) in menuList" :key="index" :name="item.name" class="list-item">
           <Tooltip :content="item.meta.title" placement="right" v-if="!item.children">
-            <a class="text-white" @click="clickIcon(item)"><Icon :type="item.meta.icon" class="text-white text-24"/></a>
+            <a class="text-white" @click="clickIcon(item)"><Icon :type="item.meta.icon" class="text-24"/></a>
           </Tooltip>
           <Dropdown @on-click="onclickItem" v-else placement="right-start" transfer>
             <a><Icon :type="item.meta.icon" @click.stop="clickIcon(item)" class="text-white text-24"/></a>
@@ -57,25 +57,20 @@ export default {
   },
   methods: {
     onclickItem (name) {
-      this.setActiveContent(name)
       this.$router.push({name: name})
     },
     clickIcon (first) {
       if (first.children) {
-        this.setActiveContent(first.children[0].name)
         this.$router.push({name: first.children[0].name})
       } else {
-        this.setActiveContent(first.name)
         this.$router.push({name: first.name})
       }
     },
     clickPane (first) {
       this.setOpenFlag({activeOpen: first.name, isOpen: true})
       if (first.children) {
-        this.setActiveContent(first.children[0].name)
         this.$router.push({name: first.children[0].name})
       } else {
-        this.setActiveContent(first.name)
         this.$router.push({name: first.name})
       }
     },
@@ -83,7 +78,6 @@ export default {
       this.setOpenFlag({activeOpen: first.name, isOpen: !this.openFlag.isOpen})
     },
     clickContent (second) {
-      this.setActiveContent(second.name)
       this.$router.push({name: second.name})
     },
     isActiveFirst (first) {
@@ -113,7 +107,6 @@ export default {
     })
   },
   mounted () {
-    this.setActiveContent(this.$route.name)
     if (this.active.activeSecond) {
       this.setOpenFlag({activeOpen: this.active.activeFirst, isOpen: true})
     }
@@ -123,6 +116,15 @@ export default {
 </script>
 <style lang="less" scoped>
   .side-menu-wrapper {
+    .ivu-menu-vertical.ivu-menu-light:after {
+       background: none !important;
+    }
+    .label {
+      color: #dce1e8;
+      &:hover {
+        color: #fff;
+      }
+    }
     .collapse {
       background-color: #515a6e;
       border-radius: 3px;
@@ -177,10 +179,8 @@ export default {
         width: 100%;
         .ivu-dropdown-rel a{
           width: 100%;
+          color: #d0d5dc;
         }
-      }
-      .ivu-select-dropdown {
-        width: 120px !important;
       }
       .ivu-tooltip {
         width: 100%;
