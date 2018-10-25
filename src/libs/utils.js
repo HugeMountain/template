@@ -12,11 +12,12 @@ export const getMenuByRouter = (routerList, access) => {
       let nav = {
         path: route.path,
         name: route.name,
-        component: route.component,
+        // component: route.component,
         meta: route.meta
       }
       if (children && children.length > 0 && route.meta.single) {
-        nav.redirect = { name: children[0].name }
+        nav.name = children[0].name
+        nav.path = children[0].path
       } else if (children && children.length > 0 && !route.meta.single) {
         nav.children = getMenuByRouter(children, access)
       }

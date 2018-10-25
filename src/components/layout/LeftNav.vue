@@ -100,11 +100,11 @@ export default {
       'setOpenFlag'
     ])
   },
-  watch: {
-    collapsed () {
-      console.log(this.collapsed)
-    }
-  },
+  // watch: {
+  //   active () {
+  //     console.log(this.active)
+  //   }
+  // },
   computed: {
     ...mapGetters({
       menuList: 'getLeftNavList',
@@ -112,7 +112,10 @@ export default {
       openFlag: 'getOpenFlag'
     })
   },
-  mounted () {}
+  mounted () {
+    this.setActiveContent(this.$route.name)
+    console.log(this.active)
+  }
 }
 </script>
 <style lang="less" scoped>
