@@ -14,7 +14,18 @@
           <header-bar @handle-collapsed-change="handleCollapsedChange" :collapsed="collapsed">
           </header-bar>
         </Header>
-        <Content>Content</Content>
+        <Content>
+          <Layout>
+            <div class="tags">
+              <tags-nav/>
+            </div>
+            <div class="content">
+              <keep-alive :include="cacheList">
+                <router-view></router-view>
+              </keep-alive>
+            </div>
+          </Layout>
+        </Content>
         <Footer>Footer</Footer>
       </Layout>
     </Layout>
@@ -22,10 +33,12 @@
 </template>
 <script>
 import LeftNav from '@/components/layout/LeftNav.vue'
+import TagsNav from '@/components/layout/TagsNav.vue'
 import HeaderBar from '@/components/layout/HeaderBar.vue'
 export default {
   components: {
     LeftNav,
+    TagsNav,
     HeaderBar
   },
   data () {
@@ -36,6 +49,14 @@ export default {
   methods: {
     handleCollapsedChange (state) {
       this.collapsed = state
+    }
+  },
+  computed: {
+    tagNavList () {
+      return this.$store.state.layout.tagNavList
+    },
+    cacheList () {
+      return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
     }
   }
 }

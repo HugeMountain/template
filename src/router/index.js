@@ -12,6 +12,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
+  store.commit('addTagNavList', to)
   store.commit('setActiveContent', to.name)
   next()
 })

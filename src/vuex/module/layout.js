@@ -1,10 +1,12 @@
 import routers from '@/router/index'
 import { getBreadCrumbList, getMenuByRouter } from '@/libs/utils'
+import _findIndex from 'lodash/findIndex'
 export default {
   // 创建一个对象来保存应用启动时的初始状态
   state: {
     breadcrumbList: [],
     leftNavList: [],
+    tagNavList: [],
     activeContent: '',
     openFlag: {
       activeOpen: '', isOpen: false
@@ -36,6 +38,17 @@ export default {
     },
     setOpenFlag (state, openFlag) {
       state.openFlag = openFlag
+    },
+    addTagNavList (state, nav) {
+      let tagNavs = state.tagNavList
+      let index = _findIndex(tagNavs, { name: nav.name })
+      state.tagNavList = index === -1 ? [...tagNavs, nav] : tagNavs
+    },
+    removeTagNavList (state, list) {
+      let tagNavs = state.tagNavList
+      return tagNavs.filter((nav) => {
+        return list.indexOf(nav) === -1
+      })
     }
   },
   actions: {}
