@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import routes from './router'
 import iView from 'iview'
 import store from '@/vuex/store.js'
+import { getTagsTitle } from '@/libs/utils'
 
 Vue.use(Router)
 
@@ -12,7 +13,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
-  store.commit('addTagNavList', to)
+  store.commit('addTagNav', {meta: to.meta, name: to.name, params: to.params, path: to.params, query: to.query, showTitle: getTagsTitle(to.matched)})
   store.commit('setActiveContent', to.name)
   next()
 })

@@ -24,7 +24,7 @@ export const getMenuByRouter = (routerList, access) => {
       leftNav.push(nav)
     }
   })
-  console.log(leftNav)
+  console.log('leftNav', leftNav)
   return leftNav
 }
 
@@ -38,4 +38,15 @@ export const getBreadCrumbList = (routeMatched) => {
     return routeMatched.slice(1)
   }
   return routeMatched
+}
+
+export const getTagsTitle = (routeMatched) => {
+  let titleArr = []
+  if (routeMatched.length > 1 && routeMatched[0].meta.single) {
+    return routeMatched.slice(1)
+  }
+  routeMatched.forEach(item => {
+    item.meta && titleArr.push(item.meta.title)
+  })
+  return titleArr.join('/')
 }

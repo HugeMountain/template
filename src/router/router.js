@@ -112,6 +112,81 @@ export default [
           title: 'one'
         },
         component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/one/three',
+        name: 'one_three',
+        meta: {
+          icon: 'md-at',
+          title: 'three'
+        },
+        component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/one/four',
+        name: 'one_four',
+        meta: {
+          icon: 'md-at',
+          title: 'four'
+        },
+        component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/one/five',
+        name: 'one_five',
+        meta: {
+          icon: 'md-at',
+          title: 'five'
+        },
+        component: () => import('@/views/one/one.vue')
+      }
+    ]
+  },
+  {
+    path: '/flex',
+    name: 'flex',
+    component: MainIndex,
+    meta: {
+      icon: 'md-at',
+      title: '组件5'
+    },
+    redirect: '/flex/one',
+    children: [
+      {
+        path: '/flex/one',
+        name: 'flex_one',
+        meta: {
+          icon: 'md-at',
+          title: 'one'
+        },
+        component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/flex/three',
+        name: 'flex_three',
+        meta: {
+          icon: 'md-at',
+          title: 'three'
+        },
+        component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/flex/four',
+        name: 'flex_four',
+        meta: {
+          icon: 'md-at',
+          title: 'four'
+        },
+        component: () => import('@/views/one/one.vue')
+      },
+      {
+        path: '/flex/five',
+        name: 'flex_five',
+        meta: {
+          icon: 'md-at',
+          title: 'five'
+        },
+        component: () => import('@/views/one/one.vue')
       }
     ]
   },

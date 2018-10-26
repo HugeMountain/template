@@ -15,18 +15,15 @@
           </header-bar>
         </Header>
         <Content>
-          <Layout>
-            <div class="tags">
-              <tags-nav/>
-            </div>
-            <div class="content">
-              <keep-alive :include="cacheList">
-                <router-view></router-view>
-              </keep-alive>
-            </div>
-          </Layout>
+          <div class="tags">
+            <tags-nav/>
+          </div>
+          <div class="content">
+            <keep-alive :include="cacheList">
+              <router-view></router-view>
+            </keep-alive>
+          </div>
         </Content>
-        <Footer>Footer</Footer>
       </Layout>
     </Layout>
   </div>
@@ -68,6 +65,16 @@ export default {
     height: 100%;
     .custom-header {
       padding: 0 !important;
+    }
+    .ivu-layout-content {
+      display: flex;
+      flex-direction: column;
+      .tags {
+        height: 40px;
+      }
+      .content {
+        flex: 1;
+      }
     }
   }
 </style>
