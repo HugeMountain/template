@@ -61,6 +61,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * 鼠标滚动事件
+     * @param e
+     */
     handleMouseScroll (e) {
       let type = e.type
       let delta = 0
@@ -84,6 +88,10 @@ export default {
         }
       }
     },
+    /**
+     * 点击右键菜单时间
+     * @param type
+     */
     handleContextClick (type) {
       if (type === 'all') {
         let res = this.tagNavList.filter(item => item.name !== 'home')
@@ -94,6 +102,11 @@ export default {
         this.removeTagNavList(res)
       }
     },
+    /**
+     * 关闭tag事件
+     * @param current
+     * @param index
+     */
     handleClose (current, index) {
       let navList = _cloneDeep(this.tagNavList)
       this.removeTagNavList([current])
@@ -102,6 +115,10 @@ export default {
         this.$router.push({name: next.name})
       }
     },
+    /**
+     * 点击tag事件
+     * @param item
+     */
     handleClick (item) {
       this.$router.push({name: item.name})
     },
@@ -124,6 +141,10 @@ export default {
         this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.outerPadding - tag.offsetWidth))
       }
     },
+    /**
+     * 设置tags导航栏视口
+     * @param name
+     */
     setView (name) {
       this.$nextTick(() => {
         this.refsTag = this.$refs.tagsPageOpened
@@ -135,6 +156,11 @@ export default {
         })
       })
     },
+    /**
+     * 鼠标右键事件
+     * @param item
+     * @param e
+     */
     contextMenu (item, e) {
       if (item.name === 'home') {
         return
@@ -144,6 +170,9 @@ export default {
       this.contextMenuLeft = e.clientX - offsetLeft + 10
       this.contextMenuTop = e.clientY - 64
     },
+    /**
+     * 关闭右键菜单
+     */
     closeMenu () {
       this.visible = false
     },

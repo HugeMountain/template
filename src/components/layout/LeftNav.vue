@@ -94,11 +94,6 @@ export default {
       'setOpenFlag'
     ])
   },
-  // watch: {
-  //   active () {
-  //     console.log(this.active)
-  //   }
-  // },
   computed: {
     ...mapGetters({
       menuList: 'getLeftNavList',
