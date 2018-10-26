@@ -10,6 +10,7 @@
 <script>
 import BreadCrumb from './BreadCrumb'
 export default {
+  name: 'HeaderBar',
   props: {
     collapsed: {
       type: Boolean,
