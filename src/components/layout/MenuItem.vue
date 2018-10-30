@@ -16,7 +16,7 @@
 <script>
 
 export default {
-  name: 'LeftNav',
+  name: 'MenuItem',
   components: {},
   props: {
     menuList: Array

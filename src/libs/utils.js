@@ -50,3 +50,31 @@ export const getTagsTitle = (routeMatched) => {
   })
   return titleArr.join('/')
 }
+
+export const willOpen = (activeContent) => {
+  let active = activeContent
+  let activeArray = active ? active.split('_') : []
+  return activeArray.length > 1
+}
+/**
+ * 判断当前判断节点是否属于当前选中路由
+ * @param prev 判断节点的路由名称
+ * @param current  当前选中路由名称
+ * @returns {boolean}
+ */
+export const nameContain = (prev, current) => {
+  if (prev.length > current.length) {
+    return false
+  }
+  let res = true
+  let prevArr = prev ? prev.split('_') : []
+  let currArr = current ? current.split('_') : []
+  let length = prevArr.length
+  for (let i = 0; i < length; i++) {
+    if (prevArr[i] !== currArr[i]) {
+      res = false
+      break
+    }
+  }
+  return res
+}

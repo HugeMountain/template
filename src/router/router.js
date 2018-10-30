@@ -59,7 +59,28 @@ export default [
           icon: 'md-at',
           title: '欢迎2'
         },
-        component: () => import('@/views/hello/HelloWorld2.vue')
+        redirect: '/hello/index2/index',
+        children: [
+          {
+            path: '/hello/index2/index',
+            name: 'hello_index2_index',
+            meta: {
+              icon: 'md-at',
+              title: '欢迎3'
+            },
+            component: () => import('@/views/hello/HelloWorld.vue')
+          },
+          {
+            path: '/hello/index2/index2',
+            name: 'hello_index2_index2',
+            meta: {
+              hideTop: true,
+              icon: 'md-at',
+              title: '欢迎4'
+            },
+            component: () => import('@/views/hello/HelloWorld2.vue')
+          }
+        ]
       }
     ]
   },

@@ -1,5 +1,5 @@
 import routers from '@/router/index'
-import { getBreadCrumbList, getMenuByRouter, getHomeRoute } from '@/libs/utils'
+import { getBreadCrumbList, getMenuByRouter, willOpen } from '@/libs/utils'
 import _findIndex from 'lodash/findIndex'
 export default {
   // 创建一个对象来保存应用启动时的初始状态
@@ -7,27 +7,14 @@ export default {
     breadcrumbList: [],
     leftNavList: [],
     tagNavList: [],
-    activeContent: {},
-    openFlag: {
-      activeOpen: '', isOpen: false
-    }
+    activeContent: '',
+    openFlag: false
   },
   getters: {// 箭头函数后面竟然不能加大括号，要命不
     getLeftNavList: (state, getters, rootState) => getMenuByRouter(routers.options.routes, rootState.account.access),
     getActiveContent: (state, getters, rootState) => {
-      let res = {activeFirst: '', activeSecond: ''}
-      let active = state.activeContent
-      let activeArray = active ? active.split('_') : []
-      if (activeArray.length === 1) {
-        res = {activeFirst: activeArray[0], activeSecond: ''}
-      }
-      if (activeArray.length === 2) {
-        res = {activeFirst: activeArray[0], activeSecond: active}
-      }
-      if (res.activeSecond) {
-        state.openFlag = {activeOpen: res.activeFirst, isOpen: true}
-      }
-      return res
+      state.openFlag = willOpen(state.activeContent)
+      return state.activeContent
     },
     getOpenFlag: (state, getters, rootState) => {
       return state.openFlag
@@ -56,7 +43,7 @@ export default {
       let filterList = tagNavs.filter((nav) => {
         return list.indexOf(nav) === -1
       })
-      state.tagNavList = filterList;
+      state.tagNavList = filterList
       localStorage.tagNaveList = JSON.stringify(filterList)
     }
   },

@@ -1,22 +1,20 @@
 <template>
   <div>
-    <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name" :class="{ 'collapse-item-active':  isActiveFirst(item) }">
+    <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name"
+         :class="{ 'collapse-item-active':  isActive(item) }">
       <div class="collapse-header">
         <div class="d-inline-block fl label">
           <Icon :type="item.meta.icon"/>
           <span>{{item.meta.title}}</span>
         </div>
-        <div class="text-black fr cursor-pointer d-inline-block full-height" style="width: 25px" @click.stop="clickArrow(item)">
-          <Icon type="ios-arrow-forward" class="text-white" v-if="item.children && !isOpen(item)"/>
-          <Icon type="ios-arrow-down" class="text-white" v-if="item.children && isOpen(item)"/>
+        <div class="text-black fr cursor-pointer d-inline-block full-height" v-if="item.children && item.children.length > 0" style="width: 25px" @click.stop="clickArrow(item)">
+          <Icon type="ios-arrow-down" class="text-white" v-if="isOpen(item)"/>
+          <Icon type="ios-arrow-forward" class="text-white" v-else/>
         </div>
       </div>
-      <div class="collapse-content" v-if="item.children && isOpen(item)">
+      <div class="collapse-content" v-if="item.children && item.children.length > 0 && isOpen(item)">
         <div class="collapse-content-box">
-          <div v-for="(row, i) in item.children" :key="i" @click.stop="clickContent(row)" class="cursor-pointer label"
-               :class="{'active-content': isActiveSecond(row)}">
-            {{row.meta.title}}
-          </div>
+            <collapse-block :menu-list="item.children"></collapse-block>
         </div>
       </div>
     </div>
@@ -24,9 +22,13 @@
 </template>
 <script>
 import { mapMutations, mapGetters } from 'vuex'
+import { nameContain, willOpen } from '@/libs/utils'
+import CollapseBlock from './CollapseBlock.vue'
 export default {
   name: 'CollapseItem',
-  components: {},
+  components: {
+    CollapseBlock
+  },
   props: {
     menuList: Array
   },
@@ -35,7 +37,7 @@ export default {
   },
   methods: {
     clickPane (first) {
-      this.setOpenFlag({activeOpen: first.name, isOpen: true})
+      this.setOpenFlag(true)
       if (first.children) {
         this.$router.push({name: first.children[0].name})
       } else {
@@ -43,19 +45,16 @@ export default {
       }
     },
     clickArrow (first) {
-      this.setOpenFlag({activeOpen: first.name, isOpen: !this.openFlag.isOpen})
+      this.setOpenFlag(!this.openFlag)
     },
     clickContent (second) {
       this.$router.push({name: second.name})
     },
-    isActiveFirst (first) {
-      return this.active.activeFirst === first.name || (first.children && this.active.activeSecond === first.children[0].name)
-    },
-    isActiveSecond (second) {
-      return this.active.activeSecond === second.name
+    isActive (node) {
+      return nameContain(node.name, this.active)
     },
     isOpen (first) {
-      return this.openFlag.activeOpen === first.name && this.openFlag.isOpen
+      return nameContain(first.name, this.active) && this.openFlag
     },
     ...mapMutations([
       'setOpenFlag'
@@ -68,10 +67,10 @@ export default {
     })
   },
   mounted () {
-    if (this.active.activeSecond) {
-      this.setOpenFlag({activeOpen: this.active.activeFirst, isOpen: true})
+    console.log('menu1', this.menuList)
+    if (willOpen(this.active)) {
+      this.setOpenFlag(true)
     }
-    console.log(this.active)
   }
 }
 </script>
