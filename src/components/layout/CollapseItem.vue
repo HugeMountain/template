@@ -1,28 +1,30 @@
 <template>
   <div>
-    <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menuList" :key="index" :name="item.name"
+    <transition-group name="collapse-item-animation">
+    <div class="collapse-item" @click.stop="clickPane(item)" v-for="(item, index) in menus" :key="index" :name="item.name"
          :class="{ 'collapse-item-active':  isActive(item) }">
       <div class="collapse-header">
         <div class="d-inline-block fl label">
           <Icon :type="item.meta.icon"/>
           <span>{{item.meta.title}}</span>
         </div>
-        <div class="text-black fr cursor-pointer d-inline-block full-height" v-if="item.children && item.children.length > 0" style="width: 25px" @click.stop="clickArrow(item)">
-          <Icon type="ios-arrow-down" class="text-white" v-if="isOpen(item)"/>
+        <div class="text-black fr cursor-pointer d-inline-block full-height" v-if="item.hasOwnProperty('open')" style="width: 25px" @click.stop="clickArrow(item, index)">
+          <Icon type="ios-arrow-down" class="text-white" v-if="item.open"/>
           <Icon type="ios-arrow-forward" class="text-white" v-else/>
         </div>
       </div>
-      <div class="collapse-content" v-if="item.children && item.children.length > 0 && isOpen(item)">
+      <div class="collapse-content" v-if="item.hasOwnProperty('open') && item.open">
         <div class="collapse-content-box">
             <collapse-block :menu-list="item.children"></collapse-block>
         </div>
       </div>
     </div>
+    </transition-group>
   </div>
 </template>
 <script>
 import { mapMutations, mapGetters } from 'vuex'
-import { nameContain, willOpen } from '@/libs/utils'
+import { nameContain } from '@/libs/utils'
 import CollapseBlock from './CollapseBlock.vue'
 export default {
   name: 'CollapseItem',
@@ -33,19 +35,21 @@ export default {
     menuList: Array
   },
   data () {
-    return {}
+    return {
+      menus: []
+    }
   },
   methods: {
     clickPane (first) {
-      this.setOpenFlag(true)
       if (first.children) {
         this.$router.push({name: first.children[0].name})
       } else {
         this.$router.push({name: first.name})
       }
     },
-    clickArrow (first) {
-      this.setOpenFlag(!this.openFlag)
+    clickArrow (first, index) {
+      this.menus[index].open = !first.open
+      this.setLeftNavList(this.menus)
     },
     clickContent (second) {
       this.$router.push({name: second.name})
@@ -53,11 +57,9 @@ export default {
     isActive (node) {
       return nameContain(node.name, this.active)
     },
-    isOpen (first) {
-      return nameContain(first.name, this.active) && this.openFlag
-    },
     ...mapMutations([
-      'setOpenFlag'
+      'setOpenFlag',
+      'setLeftNavList'
     ])
   },
   computed: {
@@ -67,10 +69,8 @@ export default {
     })
   },
   mounted () {
+    this.menus = this.menuList
     console.log('menu1', this.menuList)
-    if (willOpen(this.active)) {
-      this.setOpenFlag(true)
-    }
   }
 }
 </script>

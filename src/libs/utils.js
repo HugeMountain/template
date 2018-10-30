@@ -2,9 +2,10 @@
 /**
  * @param {Array} routerList 通过路由列表得到左侧菜单列表
  * @param {Array} access 当前用户的权限列表
+ * @param {String} activeContent 当前路由
  * @returns {Array}
  */
-export const getMenuByRouter = (routerList, access) => {
+export const getMenuByRouter = (routerList, access, activeContent) => {
   let leftNav = []
   routerList.forEach(route => {
     if (route.meta) {
@@ -12,19 +13,38 @@ export const getMenuByRouter = (routerList, access) => {
       let nav = {
         path: route.path,
         name: route.name,
-        // component: route.component,
         meta: route.meta
       }
       if (children && children.length > 0 && route.meta.single) {
         nav.name = children[0].name
         nav.path = children[0].path
       } else if (children && children.length > 0 && !route.meta.single) {
-        nav.children = getMenuByRouter(children, access)
+        nav.open = nameContain(route.name, activeContent)
+        nav.children = getMenuByRouter(children, access, activeContent)
       }
       leftNav.push(nav)
     }
   })
   console.log('leftNav', leftNav)
+  return leftNav
+}
+
+/**
+ * @param {Array} list 当前左侧边栏列表
+ * @param {String} activeContent 当前路由
+ * @returns {Array}
+ */
+export const getMenuByActive = (list, activeContent) => {
+  let leftNav = list
+  leftNav.forEach(item => {
+    let children = item.children
+    if (item.hasOwnProperty('open')) {
+      item.open = nameContain(item.name, activeContent)
+    }
+    if (children && children.length > 0) {
+      item.children = getMenuByActive(children, activeContent)
+    }
+  })
   return leftNav
 }
 

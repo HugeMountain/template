@@ -37,6 +37,7 @@ export default {
       menuList: 'getLeftNavList'
     })
   },
+  watch: {},
   mounted () {}
 }
 </script>
