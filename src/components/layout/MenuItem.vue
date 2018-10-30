@@ -4,20 +4,17 @@
       <Tooltip :content="item.meta.title" placement="right" v-if="!item.children">
         <a class="text-white" @click="clickIcon(item)"><Icon :type="item.meta.icon" class="text-24"/></a>
       </Tooltip>
-      <Dropdown @on-click="onclickItem" v-else placement="right-start" transfer>
-        <a><Icon :type="item.meta.icon" @click.stop="clickIcon(item)" class="text-white text-24"/></a>
-        <DropdownMenu slot="list" class="drop-down-menu">
-          <DropdownItem v-for="(row, i) in item.children" :name="row.name" :key="i">{{row.meta.title}}</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+      <dropdown-block v-else :menu="item" :show-icon="true"></dropdown-block>
     </div>
   </div>
 </template>
 <script>
-
+import DropdownBlock from './DropdownBlock.vue'
 export default {
   name: 'MenuItem',
-  components: {},
+  components: {
+    DropdownBlock
+  },
   props: {
     menuList: Array
   },
@@ -54,13 +51,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      .ivu-dropdown{
-        width: 100%;
-        .ivu-dropdown-rel a{
-          width: 100%;
-          color: #d0d5dc;
-        }
-      }
       .ivu-tooltip {
         width: 100%;
         .ivu-tooltip-rel a{
