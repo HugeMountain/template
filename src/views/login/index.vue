@@ -4,13 +4,13 @@
       <div class="my-3">欢迎登录</div>
       <Form ref="form" :model="form" :rules="rule">
         <FormItem label="" prop="username" class="width-30">
-          <Input type="password" prefix="ios-contact" v-model="form.username"/>
+          <Input type="text" prefix="ios-contact" v-model="form.username"/>
         </FormItem>
         <FormItem label="" prop="password" class="width-30">
           <Input type="password" prefix="ios-lock-outline" v-model="form.password"/>
         </FormItem>
         <FormItem class="width-30">
-          <Button type="primary" class="width-20" @click="handleSubmit('form')">登录</Button>
+          <Button type="primary" class="width-20" @keyup.enter.native="handleSubmit('form')" @click="handleSubmit('form')">登录</Button>
         </FormItem>
       </Form>
     </div>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+const qs = require('querystring')
 export default {
   data () {
     return {
@@ -40,8 +42,26 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$store.commit('setActiveContent', 'view')
-          this.$router.push({name: 'HelloWorld'})
+          axios({
+            method: 'post',
+            url: 'http://localhost:8080/oauth/token',
+            data: qs.stringify({
+              username: this.form.username,
+              password: this.form.password,
+              grant_type: 'password',
+              client_id: 'platform',
+              client_secret: 'my-secret-token'
+            }),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            withCredentials: true,
+            xsrfCookieName: 'XSRF-TOKEN',
+            xsrfHeaderName: 'X-XSRF-TOKEN'
+          }).then(res => {
+            sessionStorage.setItem('access_token', res.data.access_token)
+            this.$router.push({path: '/'})
+          })
         }
       })
     }

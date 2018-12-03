@@ -3,10 +3,6 @@ import MainIndex from '@/views/index.vue'
 export default [
   {
     path: '/login',
-    redirect: '/login'
-  },
-  {
-    path: '/login',
     name: 'login',
     component: () => import('@/views/login/index.vue')
   },
