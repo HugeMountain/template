@@ -42,26 +42,26 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          axios({
-            method: 'post',
-            url: 'http://localhost:8080/oauth/token',
-            data: qs.stringify({
-              username: this.form.username,
-              password: this.form.password,
-              grant_type: 'password',
-              client_id: 'platform',
-              client_secret: 'my-secret-token'
-            }),
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            withCredentials: true,
-            xsrfCookieName: 'XSRF-TOKEN',
-            xsrfHeaderName: 'X-XSRF-TOKEN'
-          }).then(res => {
-            sessionStorage.setItem('access_token', res.data.access_token)
+          // axios({
+          //   method: 'post',
+          //   url: 'http://localhost:8080/oauth/token',
+          //   data: qs.stringify({
+          //     username: this.form.username,
+          //     password: this.form.password,
+          //     grant_type: 'password',
+          //     client_id: 'platform',
+          //     client_secret: 'my-secret-token'
+          //   }),
+          //   headers: {
+          //     'Content-Type': 'application/x-www-form-urlencoded'
+          //   },
+          //   withCredentials: true,
+          //   xsrfCookieName: 'XSRF-TOKEN',
+          //   xsrfHeaderName: 'X-XSRF-TOKEN'
+          // }).then(res => {
+          //   sessionStorage.setItem('access_token', res.data.access_token)
             this.$router.push({path: '/'})
-          })
+          // })
         }
       })
     }

@@ -13,12 +13,12 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
-  let token = sessionStorage.getItem('access_token')
-  if (!token && to.name !== 'login') {
-    next({
-      path: '/login'
-    })
-  }
+  // let token = sessionStorage.getItem('access_token')
+  // if (!token && to.name !== 'login') {
+  //   next({
+  //     path: '/login'
+  //   })
+  // }
   store.commit('addTagNav', {meta: to.meta, name: to.name, params: to.params, path: to.params, query: to.query, showTitle: getTagsTitle(to.matched)})
   store.commit('setActiveContent', to.name)
   next()
